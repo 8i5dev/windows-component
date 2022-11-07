@@ -1,14 +1,18 @@
 import suanpan
 from suanpan.app import app
-from suanpan.app.arguments import String, Json
+from suanpan.app.arguments import String, Json, Csv
+from suanpan.log import logger
+# from suanpan.utils import image
 
 
-@app.input(Json(key="inputData1", alias="user_text", default="Suanpan"))
+@app.input(Csv(key="inputData1"))
 @app.param(String(key="param_prefix", alias="prefix"))
-@app.output(Json(key="outputData1", alias="result"))
+@app.output(String(key="outputData1", alias="result"))
 def hello_world(context):
     args = context.args
-    return f'Hello World, {args.prefix} {args.user_text}!'
+    logger.info(f'args:{args.prefix}')
+    # image.read('aaa.png')
+    return f'Welcome {args.prefix}!'
 
 
 if __name__ == "__main__":
